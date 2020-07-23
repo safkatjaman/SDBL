@@ -6,10 +6,161 @@
 
       <link rel="stylesheet" href="style.css">
 
-
       <title>S D B L</title>
+
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+      <link href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
+      <div id="login-page">
+            <head>
+                  <section class="jumbotron jumbotron-fluid bg-white pb-0">
+                        <div class="container">
+                          <h1 class="bank-title text-center">Welcome To SD Bank Ltd.</h1>
+                          <p class="bank-tag text-center">No.1 Bank in the world</p>
+                        </div>
+                  </section>
+            </head>
       
+      <!--  -->
+      
+            <section class="jumbotron jumbotron-fluid bg-white pt-0 pb-0">
+                  <div class="container login-area">
+                        <form>
+                              <div class="form-group">
+                                <h3>Sign In From Here</h3>
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input placeholder="Please enter your email address" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input placeholder="Please enter your password" type="password" class="form-control" id="exampleInputPassword1">
+                              </div>
+                              <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+                              </div>
+                        </form>
+                              <button id="sign-in" class="btn btn-success">Sign In</button>
+                  </div>
+            </section>
+      </div>
+
+      <!-- Transaction Area -->
+
+      <div id="transaction-page">
+            <section class="jumbotron jumbotron-fluid bg-white mb-0 pb-0 pt-20">
+                  <div class="container">
+                        <h1 style="font-size: 60px; font-weight: 700;" class="text-center">Transaction Area</h1>
+                        <div class="row">
+                              <div class="col-md-4">
+                                    <div class="deposit-style">
+                                          <h2>Deposit</h2>
+                                          <h4>৳ <span id="current-deposit">00</span> টাকা</h4>
+                                    </div>
+                              </div>
+                              <div class="col-md-4">
+                                    <div class="withdraw-style">
+                                          <h2>Withdraw</h2>
+                                          <h4>৳ <span id="current-withdraw">00</span> টাকা</h4>
+                                    </div>
+                              </div>
+                              <div class="col-md-4">
+                                    <div class="balance-style">
+                                          <h2>Balance</h2>
+                                          <h4>৳ <span id="current-balance">100</span> টাকা</h4>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="row text-center">
+                              <div class="col-md-6">
+                                    <div class="submit-area">
+                                          <h2>Deposit</h2>
+                                          <input id= "deposit-amount" placeholder="BDT You want to deposit" type="number">
+                                          <br><br>
+                                          <button id="addDeposit" class="btn btn-danger">Deposit</button>
+                                    </div>
+                              </div>
+                              <div class="col-md-6">
+                                    <div class="submit-area">
+                                          <h2>Withdraw</h2>
+                                          <input id="withdraw-amount" placeholder="BDT You want to withdraw" type="number">
+                                          <br><br>
+                                          <button id="addWithdraw" class="btn btn-danger">Withdraw</button>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="jumbotron jumbotron-fluid bg-white pb-0 mb-0">
+                              <div class="container">
+                                    <div class="text-center">
+                                          <button id="go-back-button" type="button" class="btn btn-outline-warning">Go Back To Sign In Page</button>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </section>
+      </div>
+
+      <!-- Footer -->
+
+      <footer>
+            <div class="footer-section">
+                  <p class="text-center">©SD Bank Ltd. 2020. All Rights Reserved.</p>
+            </div>
+      </footer>
+
+      <!-- JavaScript -->
+
+      <!-- Sign In Button Event Handler -->
+
+      <script>
+            const signInBtn = document.getElementById("sign-in");
+            signInBtn.addEventListener("click", function(){
+                  const loginPage = document.getElementById('login-page');
+                  loginPage.style.display = "none";
+                  const transactionPage = document.getElementById('transaction-page');
+                  transactionPage.style.display = "block";
+            })
+
+/* Deposit Button Event Handler */
+
+            const depositBtn = document.getElementById("addDeposit");
+            depositBtn.addEventListener("click", function(){
+                  const depositNumber = getInputNumber("deposit-amount")
+
+                  updateSpanText("current-deposit", depositNumber);
+                  updateSpanText("current-balance", depositNumber);
+
+                  document.getElementById("deposit-amount").value = "";
+
+/* Withdraw Button Event Handler */
+
+            const withdrawBtn = document.getElementById("addWithdraw");
+            withdrawBtn.addEventListener("click", function(){
+                  const withdrawNumber = getInputNumber("withdraw-amount");
+
+                  updateSpanText("current-withdraw", withdrawNumber);
+                  updateSpanText("current-balance", -1 * withdrawNumber);
+
+                  document.getElementById("withdraw-amount").value = "";
+            })
+
+            function getInputNumber(id){
+                  const amount = document.getElementById(id).value;
+                  const amountNumber = parseFloat(amount);
+                  return amountNumber;
+            }
+
+            })
+            function updateSpanText(id, depositNumber){
+                  const current = document.getElementById(id).innerText;
+                  const currentNumber = parseFloat(current);
+                  const totalAmount = depositNumber + currentNumber;
+                  document.getElementById(id).innerText = totalAmount;
+            }
+      </script>
 </body>
 </html>
